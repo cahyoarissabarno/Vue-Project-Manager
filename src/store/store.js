@@ -26,12 +26,23 @@ export const store = new Vuex.Store({
                 const changes = res.docChanges();
           
                 changes.forEach(change => {
-                  if (change.type === 'added') {
-                    state.projects.push({
-                      ...change.doc.data(),
-                      id: change.doc.id
-                    })
-                  }
+                    var Id = change.doc.id
+                    var index = state.projects.map(x => {
+                        return x.id;
+                    }).indexOf(Id);
+
+                    if (change.type === 'added') {
+                        state.projects.push({
+                        ...change.doc.data(),
+                        id: change.doc.id
+                        })
+                    }
+                    else if(change.type === 'modified'){
+                        state.projects.splice(index, 1, change.doc.data());
+                    }
+                    else if(change.type === 'removed') {
+                        state.projects.splice(index, 1);
+                    }
                 });
             })
         }

@@ -1,8 +1,8 @@
 <template>
   <nav>
-    <v-snackbar v-model="snackbar" :timeout="4000" top color="success">
+    <v-snackbar v-model="snackbarAdd" :timeout="4000" top color="success">
       <span>Awesome ! You added a new project.</span>
-      <v-btn text color="white" @click="snackbar = false">Close</v-btn>
+      <v-btn text color="white" @click="snackbarAdd = false">Close</v-btn>
     </v-snackbar>
 
     <v-toolbar flat app>
@@ -46,7 +46,7 @@
           <p class="white--text subheading">The Net Ninja</p>
         </v-flex>
         <v-flex class="mt-4 mb-3">
-          <Popup @projectAdded="snackbar=true" />
+          <Popup @projectAdded="snackbarAdd=true" mode="add"/>
         </v-flex>
       </v-layout>
 
@@ -76,7 +76,7 @@
     data(){
       return{
         drawer:false,
-        snackbar: false
+        snackbarAdd: false
       }
     },
     computed:{
