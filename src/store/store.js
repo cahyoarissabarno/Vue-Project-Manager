@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import db from '@/fb'
+import router from '../router'
+import {db, auth} from '@/fb'
 
 Vue.use(Vuex)
 
@@ -19,6 +20,7 @@ export const store = new Vuex.Store({
             {icon:'mdi-folder', text:'My Projects', route:'/projects'},
             {icon:'mdi-account', text:'Team', route:'/team'}
         ],
+        userAuth: false
     },
     mutations:{
         fetchProjects:state=>{
@@ -45,13 +47,28 @@ export const store = new Vuex.Store({
                     }
                 });
             })
+        },
+        userAuth:state=>{
+            auth.onAuthStateChanged(function(user) {
+                if (user) {
+                  state.userAuth = true
+                  router.push('/')
+                } else {
+                  state.userAuth = false
+                  router.push('/login')
+                }
+            });
         }
     },
     actions:{
         fetchProjects:context =>{
             context.commit('fetchProjects')
+        },
+        userAuth:context=>{
+            context.commit('userAuth')
         }
     }
 })
 
+store.dispatch('userAuth')
 store.dispatch('fetchProjects')

@@ -30,7 +30,7 @@
             </v-list-item-group>
           </v-list>
         </v-menu>
-        <v-btn text color="grey">
+        <v-btn text color="grey" @click="signout">
           <span>Sign Out</span>
           <v-icon right>mdi-exit-to-app</v-icon>
         </v-btn>
@@ -68,6 +68,7 @@
   
 <script>
   import Popup from './Popup.vue'
+  import {auth} from '@/fb'
 
   export default {
     components:{
@@ -81,6 +82,13 @@
     },
     computed:{
       links(){return this.$store.state.links}
+    },
+    methods:{
+      signout(){
+        auth.signOut().then(() => {
+          this.$router.push('login')
+        })
+      }
     }
   }
 </script>

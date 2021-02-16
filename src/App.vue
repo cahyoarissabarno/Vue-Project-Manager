@@ -1,6 +1,6 @@
 <template>
   <v-app class="grey lighten-3">
-    <Navbar/>
+    <Navbar v-if="userAuth == true" />
     
     <v-main class="grey lighten-5">
       <router-view></router-view>
@@ -18,9 +18,9 @@ export default {
   components: {
     Navbar
   },
+  computed:{
+    userAuth(){return this.$store.state.userAuth}
+  }
 
-  data: () => ({
-    //
-  }),
 };
 </script>
